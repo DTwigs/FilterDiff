@@ -1,0 +1,19 @@
+ {
+  "name": "Filter Diff",
+  "version": "1",
+  "manifest_version": 2,
+  "description": "Filter the github code diff page by file type.",
+  "browser_action": {
+    "name": "Add Diff Filter",
+    "icons": ["icon.png"],
+    "default_icon": "images/icon.png"
+  },
+  "web_accessible_resources": [
+    "images/icon.png"
+  ],
+  "content_scripts": [ {
+    "js": [ "jquery.min.js", "background.js" ],
+    "css": ["mystyles.css"],
+    "matches": [ "http://github.com/*", "https://github.com/*"]
+  }]
+}

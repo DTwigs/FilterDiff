@@ -1,0 +1,24 @@
+.filter-diff-img {
+   position: absolute;
+   float: right;
+   right: 10px;
+   top: 8px;
+   height: 20px;
+   width: 20px;
+   background-image: url('chrome-extension://__MSG_@@extension_id__/images/icon.png');
+}
+
+#filter-diff {
+  float: right;
+  margin: 0 0 0 10px;
+  min-width: 110px;
+}
+
+.filter-diff-container {
+  position: relative;
+  width: 100%;
+  height: 35px;
+  padding: 5px;
+  margin: 0 0 5px;
+  background-color: #FFFFCC;
+}
