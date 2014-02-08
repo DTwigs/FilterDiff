@@ -1,9 +1,10 @@
-
+// Created By https://github.com/DTwigs
+// 2014
 
 +function () {
   //Determine if the current page should load up Github File Filter
   var checkPage = function () {
-    return location.pathname.match(/^(?=.*pull)(?=.*files)/)
+    return location.pathname.match(/^(?=.*pull)/)
   }
 
   // Remove empty array values
@@ -26,7 +27,7 @@
   }
 
   // Create the Filter container and its child elements
-  var buildGFFContainer = function () {
+  var buildGFFContainer = function (fileTypes) {
     var container = $('<div class="filter-diff-container"/>');
     var selectContainer = $('<div class="fd-style-select"/>')
     var select = $('<select id="filter-diff"/>');
@@ -35,13 +36,9 @@
     selectContainer.append(select)
     container.append(selectContainer).append(infoText)
     $('#toc').after(container);
-  }
 
-  addSelectOptions = function (fileTypes) {
     if (fileTypes.length > 0)
       clean(fileTypes, "");
-
-    var select = $('select#fiter-diff');
 
     //loop through the file types and add them to the select box as options.
     for (var i = 0, fileType; fileType = fileTypes[i++];) {
@@ -70,12 +67,11 @@
   }
 
   var init = function () {
-    buildGFFContainer();
-    addSelectOptions(getFileTypes());
-    bindEvents();
+    if(checkPage()) {
+      buildGFFContainer(getFileTypes());
+      bindEvents();
+    }
   }
 
-  if(checkPage()) {
-    init();
-  }
+  init();
 }();
