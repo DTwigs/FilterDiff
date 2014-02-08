@@ -21,9 +21,16 @@
   var getFileTypes = function () {
     var fileTypes = [];
     $('.meta .info .js-selectable-text').each( function () {
-      fileTypes.push($(this).text().split('.').pop().trim());
+      fileTypes.push(getFileTypeName($(this).text().trim()));
     });
     return $.unique(fileTypes);
+  }
+
+  var getFileTypeName = function (fileName) {
+    fileNameArr = fileName.split('.');
+    if (fileNameArr.length == 1)
+      fileNameArr = fileName.split(' ');
+    return fileNameArr.pop().trim()
   }
 
   // Create the Filter container and its child elements
@@ -51,7 +58,7 @@
       var filterVal = $(this).val();
       $("#files [data-path]").closest(".file").show();
       if (filterVal != "") {
-        $("#files [data-path]:not([data-path$='." + filterVal + "'])").closest('.file').hide();
+        $("#files [data-path]:not([data-path$='" + filterVal + "'])").closest('.file').hide();
       }
       setText(filterVal);
     });
