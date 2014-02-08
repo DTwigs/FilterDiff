@@ -1,12 +1,16 @@
  {
-  "name": "Filter Diff",
-  "version": "1",
+  "name": "Github File Filter",
+  "version": "0.1",
   "manifest_version": 2,
-  "description": "Filter the github code diff page by file type.",
+  "description": "Filter the Github code diff page by file type.",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
   "browser_action": {
     "name": "Add Diff Filter",
-    "icons": ["icon.png"],
-    "default_icon": "images/icon.png"
+    "default_icon": "images/icon128.png"
   },
   "web_accessible_resources": [
     "images/icon.png"

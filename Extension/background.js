@@ -1,11 +1,12 @@
 
 
 +function () {
-
+  //Determine if the current page should load up Github File Filter
   var checkPage = function () {
     return location.pathname.match(/^(?=.*pull)(?=.*files)/)
   }
 
+  // Remove empty array values
   var clean = function (arr, deleteValue) {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] == deleteValue) {
@@ -24,44 +25,57 @@
     return $.unique(fileTypes);
   }
 
-  var buildFilterSelect = function (fileTypes) {
+  // Create the Filter container and its child elements
+  var buildGFFContainer = function () {
     var container = $('<div class="filter-diff-container"/>');
-    var select = $('<select id="filter-diff" class="minibutton"/>');
-    select.append($("<option>").attr('value', "").text("all"));
-    var imgDiv = $("<div class='filter-diff-img'/>");
-    container.append(select).append(imgDiv)
-
+    var selectContainer = $('<div class="fd-style-select"/>')
+    var select = $('<select id="filter-diff"/>');
+    var infoText = $('<p class="explain filter-diff-text"/>').html('Showing <strong>ALL</strong> files.');
+    select.append($("<option>").attr('value', "").text("ALL"));
+    selectContainer.append(select)
+    container.append(selectContainer).append(infoText)
     $('#toc').after(container);
+  }
 
+  addSelectOptions = function (fileTypes) {
     if (fileTypes.length > 0)
       clean(fileTypes, "");
 
+    var select = $('select#fiter-diff');
+
+    //loop through the file types and add them to the select box as options.
     for (var i = 0, fileType; fileType = fileTypes[i++];) {
       select.append($("<option>").attr('value', fileType).text(fileType));
     }
   }
 
   var bindEvents = function () {
-    $("#filter-diff-img")
     $("#filter-diff").change(function (e) {
       var filterVal = $(this).val();
-      $("[data-path]").parent().show();
+      $("#files [data-path]").closest(".file").show();
       if (filterVal != "") {
-        $("[data-path]:not([data-path$='." + filterVal + "'])").parent().hide();
+        $("#files [data-path]:not([data-path$='." + filterVal + "'])").closest('.file').hide();
       }
+      setText(filterVal);
     });
   }
 
+  // Text info field to display filter results.
+  var setText = function (filterVal) {
+    if (filterVal == "")
+      filterVal = "ALL";
+    totalFiles = $("#files .file").length;
+    shownFiles = $("#files .file:visible").length;
+    $('.filter-diff-text').html("Showing <strong>" + filterVal + "</strong> files. <em><strong>" + shownFiles + "</strong> out of <strong>" + totalFiles + "</strong> files displayed.</em>");
+  }
+
   var init = function () {
-    buildFilterSelect(getFileTypes());
+    buildGFFContainer();
+    addSelectOptions(getFileTypes());
     bindEvents();
   }
+
   if(checkPage()) {
     init();
   }
 }();
-
-
-
-// $("tr.file-diff-line.gi").length (additions)
-// $("tr.file-diff-line.gd").length (deletions)

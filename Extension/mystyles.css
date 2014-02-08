@@ -8,17 +8,54 @@
    background-image: url('chrome-extension://__MSG_@@extension_id__/images/icon.png');
 }
 
-#filter-diff {
-  float: right;
-  margin: 0 0 0 10px;
+.filter-diff-text {
+  display: inline-block;
+  height: 100%;
+  margin: 8px 0 0 10px;
+}
+
+.fd-style-select select {
+  background: transparent;
+  min-width: 128px;
+  padding: 0 10px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 0;
+  height: 28px;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+}
+
+.fd-style-select select:focus {outline: none; }
+
+.fd-style-select {
   min-width: 110px;
+  height: 28px;
+  overflow: hidden;
+  background: #fcfcfc;
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon.png') no-repeat right top; /* fallback */
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon.png') no-repeat right top, -webkit-gradient(linear, left top, left bottom, from(#fcfcfc), to(#eee)); /* Saf4+, Chrome */
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon.png') no-repeat right top, -webkit-linear-gradient(top, #fcfcfc, #eee); /* Chrome 10+, Saf5.1+ */
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon.png') no-repeat right top,    -moz-linear-gradient(top, #fcfcfc, #eee); /* FF3.6+ */
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon.png') no-repeat right top,     -ms-linear-gradient(top, #fcfcfc, #eee); /* IE10 */
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon.png') no-repeat right top,      -o-linear-gradient(top, #fcfcfc, #eee); /* Opera 11.10+ */
+  background: url('chrome-extension://__MSG_@@extension_id__/images/icon.png') no-repeat right top,         linear-gradient(top, #fcfcfc, #eee);
+  background-position: right 5px top 3px, 0 0;
+  border: 1px solid #ccc;
+  float: right;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .filter-diff-container {
   position: relative;
   width: 100%;
-  height: 35px;
+  height: 38px;
   padding: 5px;
-  margin: 0 0 5px;
+  margin: 5px 0;
   background-color: #FFFFCC;
 }
