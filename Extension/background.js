@@ -4,7 +4,7 @@
 +function () {
   //Determine if the current page should load up Github File Filter
   var checkPage = function () {
-    return location.pathname.match(/^(?=.*pull)/)
+    return location.pathname.match(/^(?=.*pull)||(?=.*commit)/)
   }
 
   // Remove empty array values
@@ -18,12 +18,24 @@
     return arr;
   }
 
+  var getUnique = function(arr){
+    var u = {}, a = [];
+    for(var i = 0, l = arr.length; i < l; ++i){
+      if(u.hasOwnProperty(arr[i])) {
+        continue;
+      }
+      a.push(arr[i]);
+      u[arr[i]] = 1;
+    }
+    return a;
+  }
+
   var getFileTypes = function () {
     var fileTypes = [];
-    $('.meta .info .js-selectable-text').each( function () {
-      fileTypes.push(getFileTypeName($(this).text().trim()));
+    $('.meta[data-path]').each( function () {
+      fileTypes.push(getFileTypeName($(this).data('path').trim()));
     });
-    return $.unique(fileTypes);
+    return getUnique(fileTypes);
   }
 
   var getFileTypeName = function (fileName) {
@@ -45,6 +57,7 @@
     select.append($("<option>").attr('value', "").text("ALL"));
     selectContainer.append(select)
     container.append(selectContainer).append(infoText)
+    // #toc is a github page element
     $('#toc').after(container);
 
     if (fileTypes.length > 0)
@@ -56,12 +69,14 @@
     }
   }
 
+  var fileContainer = $('.file').parent();
+
   var bindEvents = function () {
     $("#filter-diff").change(function (e) {
       var filterVal = $(this).val();
-      $("#diff [data-path]").closest(".file").show();
+      $("[data-path]", fileContainer).closest(".file").show();
       if (filterVal != "") {
-        $("#diff [data-path]:not([data-path$='" + filterVal + "'])").closest('.file').hide();
+        $("[data-path]:not([data-path$='" + filterVal + "'])", fileContainer).closest('.file').hide();
       }
       setText(filterVal);
     });
@@ -71,8 +86,8 @@
   var setText = function (filterVal) {
     if (filterVal == "")
       filterVal = "ALL";
-    totalFiles = $("#diff .file").length;
-    shownFiles = $("#diff .file:visible").length;
+    totalFiles = $(".file", fileContainer).length;
+    shownFiles = $(".file:visible", fileContainer).length;
     $('.filter-diff-text').html("Showing <strong>" + filterVal + "</strong> files. <em><strong>" + shownFiles + "</strong> out of <strong>" + totalFiles + "</strong> files displayed.</em>");
   }
 
