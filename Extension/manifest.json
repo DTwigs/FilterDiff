@@ -1,5 +1,5 @@
  {
-  "name": "Github File Filter",
+  "name": "GitHub File Filter",
   "version": "0.1",
   "manifest_version": 2,
   "description": "Filter the Github code diff page by file type.",
