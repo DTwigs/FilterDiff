@@ -28,9 +28,12 @@
 
   var getFileTypeName = function (fileName) {
     fileNameArr = fileName.split('.');
-    if (fileNameArr.length == 1)
+    if (fileNameArr.length == 1) {
       fileNameArr = fileName.split(' ');
-    return fileNameArr.pop().trim()
+      return fileNameArr.pop().trim();
+    } else {
+      return "." + fileNameArr.pop().trim();
+    }
   }
 
   // Create the Filter container and its child elements
@@ -56,9 +59,9 @@
   var bindEvents = function () {
     $("#filter-diff").change(function (e) {
       var filterVal = $(this).val();
-      $("#files [data-path]").closest(".file").show();
+      $("#diff [data-path]").closest(".file").show();
       if (filterVal != "") {
-        $("#files [data-path]:not([data-path$='" + filterVal + "'])").closest('.file').hide();
+        $("#diff [data-path]:not([data-path$='" + filterVal + "'])").closest('.file').hide();
       }
       setText(filterVal);
     });
@@ -68,8 +71,8 @@
   var setText = function (filterVal) {
     if (filterVal == "")
       filterVal = "ALL";
-    totalFiles = $("#files .file").length;
-    shownFiles = $("#files .file:visible").length;
+    totalFiles = $("#diff .file").length;
+    shownFiles = $("#diff .file:visible").length;
     $('.filter-diff-text').html("Showing <strong>" + filterVal + "</strong> files. <em><strong>" + shownFiles + "</strong> out of <strong>" + totalFiles + "</strong> files displayed.</em>");
   }
 
