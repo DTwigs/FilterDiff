@@ -69,6 +69,20 @@
     }
   }
 
+  var buildRangeDiffLinks = function() {
+    var lastSha = $('.commit-id').last().text();
+    var title = 'Diff from here down'
+
+    $('.commit-id').each(function() {
+      var sha = $(this).text();
+      if (sha == lastSha) { return }
+      var repoUrl = location.pathname.match(/\/.*?\/.*?\//)[0];
+      var diffUrl = repoUrl + "compare/" + sha + "..." + lastSha;
+      var diffLink = $("<a class='octicon octicon-arrow-down fd-diff-range' title='" + title + "'></a>").attr('href', diffUrl);
+      $(this).parent().after(diffLink);
+    });
+  }
+
   var fileContainer = $('.file').parent();
 
   var bindEvents = function () {
@@ -94,6 +108,7 @@
   var init = function () {
     if(checkPage()) {
       buildGFFContainer(getFileTypes());
+      buildRangeDiffLinks();
       bindEvents();
     }
   }

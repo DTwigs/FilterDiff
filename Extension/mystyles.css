@@ -59,3 +59,18 @@
   margin: 5px 0;
   background-color: #FFFFCC;
 }
+
+.fd-diff-range {
+  position: absolute;
+  right: -16px;
+  color: black;
+  opacity: 0.1;
+}
+
+.fd-diff-range:hover {
+  text-decoration: none;
+}
+
+tr.commit:hover .fd-diff-range {
+  opacity: 0.8;
+}
